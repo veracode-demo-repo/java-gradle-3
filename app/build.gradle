@@ -3,17 +3,26 @@ plugins {
     id 'application'
 }
 
-mainClassName = 'app.Main'
+application {
+    mainClass = 'app.Main'
+}
 
 dependencies {
-    compile project(':base')
+    implementation project(':base')
 }
 
 task customFatJar(type: Jar) {
     manifest {
         attributes 'Main-Class': 'app.Main'
     }
-    baseName = 'executable'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    archiveBaseName = 'executable'
+    
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    
+    // Ensures task output doesn't clash with duplicate files during zipping
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    
     with jar
 }
