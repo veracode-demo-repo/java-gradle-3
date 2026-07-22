@@ -1,3 +1,6 @@
+# Updated the app/build.gradle,base/build.gradle, and removed google formatter inside build.gradle files
+
+
 # gradle-multi-project-sample
 
 sample repository to use gradle multi-project.
